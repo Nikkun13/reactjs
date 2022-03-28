@@ -1,0 +1,20 @@
+.tarjetaDos {
+    width: 99%;
+    height: auto;
+    align-items: center;
+    border: 3px solid darkgoldenrod;
+    margin:5px;
+}
+
+.imagenProducto {
+    height: 100%;
+ width: 100%;
+ object-fit: contain;
+ height:150px;
+ width: 150px;
+ align-items: center;
+}
+
+.detalles {
+    margin-bottom: 5px;
+}

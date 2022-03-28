@@ -1,0 +1,15 @@
+.masymenos {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    align-items: center;
+}
+
+.recuadroSimbolo {
+    color: white;
+}
+
+.recuadroNumero {
+    background-color: white;
+    width: 60px;
+}
