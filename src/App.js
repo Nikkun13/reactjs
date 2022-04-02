@@ -14,8 +14,7 @@ function App() {
         </header>
         <main className="App-main container"> 
           <Routes>
-            {/* <ItemListContainer className="lista" greeting="Bienvenidos al Bar de Moe"/> */}
-            <Route path='/' element={<ItemListContainer className="lista" greeting="Bienvenidos al Bar de Moe" />} />
+            <Route path='/elBardeMoe' element={<ItemListContainer className="lista" greeting="Bienvenidos al Bar de Moe" />} />
             <Route path='/category/:categoryId' element={<ItemListContainer className="lista" greeting="Bienvenidos al Bar de Moe" />} />
             <Route path='/item/:id' element={<ItemDetailContainer />} />
             <Route path='*' element={<h1>Página no encontrada. ERROR 404</h1>} />
