@@ -58,6 +58,16 @@
     margin: -25px 0 0 0px;
 }
 
+.globoDos {
+    height: 80px;
+    width: 110px;
+    background-image: url(../imagenes/globo2.png);
+    position: absolute;
+    top: 5%;
+    left: 35%;
+    margin: -25px 0 0 0px;
+}
+
 .clickMoe {
     /* background-color: blue; */
     height: 120px;

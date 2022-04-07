@@ -1,11 +1,27 @@
 import ItemCount from '../ItemCount/ItemCount'
+import { useState, useContext } from 'react'
+import { NavLink } from 'react-router-dom'
 import './ItemDetail.css'
+import CartContext from '../../Context/CartContext'
 
 const ItemDetail = (product) => {
 
-    const onAdd = (quantity) => {
-        quantity > 0 ? console.log(quantity) : console.log('Ingrese un valor mayor a 0')
-      }
+    const [quantity, setQuantity] = useState(0) 
+
+    const { addItem } = useContext(CartContext)
+
+    const onAdd = (count) => {
+        if (count > 0) {
+            setQuantity(count);
+            addItem(product, count)
+        }
+    }
+
+    const [stock, setStock] = useState(product.stock) 
+
+    const newStock = (quantity) => {
+        setStock(stock-quantity);
+    }
 
     return (
         <div className="card tarjetaDos" key={product.id}>
@@ -14,8 +30,10 @@ const ItemDetail = (product) => {
                 <h5 className="card-title">{product.name}</h5>
                 <p className="card-text">{product.description}</p>
                 <p className="card-text"><b>{product.price} U$D</b></p>
-                <ItemCount initial={0} stock={product.stock} onAdd={onAdd}/>
-                <p className="card-text">Stock: {product.stock}</p>
+                {quantity === 0 ? <ItemCount initial={0} stock={stock} onAdd={onAdd} newStock={newStock}/> : 
+                <><ItemCount initial={0} stock={stock} onAdd={onAdd} newStock={newStock}/>
+                <NavLink to='/Cart' className="btn btn-secondary btn-block botonCarrito">Ir al carrito</NavLink></>}
+                <p className="card-text">Stock: {stock}</p>
             </div>
         </div>
     )

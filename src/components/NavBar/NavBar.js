@@ -8,13 +8,14 @@ import Image from '../imagenes/cartelmoes.svg'
 
 const NavBar = () => {
 
-    const [show, setShow] = useState(false)
+    const [showUno, setShowUno] = useState(false)
+    const [showDos, setShowDos] = useState(false)
 
     return(
         <div className="headerContainer">
         <div className="cantinero">
             <div>
-                <div className="logArea"><CartWidget /><Button label="Acceder"/></div>
+                <div className="logArea"><NavLink to='/Cart' style={{ textDecoration: 'none' }}><CartWidget /></NavLink><Button label="Acceder"/></div>
             </div>
             <div className="moesContainer">
             <Link to="/elBardeMoe" >
@@ -22,8 +23,9 @@ const NavBar = () => {
             </Link>
             </div>
             <div>
-                <div className="clickMoe" onClick={() => setShow(!show)}></div>
-                {show ? <div className="globoUno"></div> : null}
+                <div className="clickMoe" onClick={() => setShowUno(!showUno)} onDoubleClick={() => setShowDos(!showDos)}></div>
+                {showUno ? <div className="globoUno"></div> : null}
+                {showDos ? <div className="globoDos"></div> : null}
             </div>
         </div>
         <nav className="navegador">
