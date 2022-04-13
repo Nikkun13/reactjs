@@ -1,10 +1,11 @@
 import { createContext, useState } from "react";
+import {useNotification} from '../notification/notification'
 
 const Context = createContext()
 
 export const CartContextProvider = ({ children }) => {
     const [cart, setCart] = useState([])
-    console.log(cart)
+    const { setNotification } = useNotification()
 
     const addItem = (product, quantity) => {
 
@@ -14,7 +15,9 @@ export const CartContextProvider = ({ children }) => {
                 prod.quantity = prod.quantity + quantity;
                 if (prod.quantity > prod.stock) {
                     prod.quantity = prod.stock;
-                    alert('El producto seleccionado supera el stock disponible. Se ha modificado el número para que coincida con el stock máximo')
+                    setNotification('warning', 'No hay suficiente stock del producto seleccionado, se agrego el existente al carrito')
+                } else {
+                    setNotification('success', 'La cantidad seleccionada se agregó correctamente al carrito')
                 }
                 repetido=true;
                 setCart([...cart])
@@ -25,6 +28,7 @@ export const CartContextProvider = ({ children }) => {
                 ...product,
                 quantity
             }
+            setNotification('success', 'La cantidad seleccionada se agregó correctamente al carrito')
             setCart([...cart, objItemCart ])
         }
 
@@ -48,6 +52,16 @@ export const CartContextProvider = ({ children }) => {
                     
             }
         })
+    }
+
+    const removeItems = (id) => {
+        cart.map((prod) => {
+            if(prod.id===id) {
+                    let newCart = cart.filter((item) => item.id !== id);
+                    setCart([...newCart])
+                }    
+            }
+        )
     }
 
     const getQuantity = () => {
@@ -75,7 +89,8 @@ export const CartContextProvider = ({ children }) => {
             clearCart,
             getQuantity,
             getPrice,
-            removeItem
+            removeItem,
+            removeItems
         }}>
             {children}
         </Context.Provider>

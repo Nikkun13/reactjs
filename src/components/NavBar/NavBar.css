@@ -40,12 +40,19 @@
     align-items: flex-start; 
     z-index: 100;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    width: 170px;
+    width: auto;
     padding: 10px;
     margin: 10px;
     background-color: darkgoldenrod;
     border-radius: 6px;
+}
+
+.unaColumna {
+    grid-template-columns: repeat(1, 1fr);
+}
+
+.dosColumnas {
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .globoUno {

@@ -1,21 +1,36 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import './NavBar.css'
 import Button from '../Button/Button'
 import CartWidget from "../CartWidget/CarWidget"
 import { Link, NavLink } from 'react-router-dom'
 import Image from '../imagenes/cartelmoes.svg'
-
+import CartContext from '../../Context/CartContext'
 
 const NavBar = () => {
 
     const [showUno, setShowUno] = useState(false)
     const [showDos, setShowDos] = useState(false)
 
+    const { getQuantity } = useContext(CartContext)
+
+    const columnas = (cantidad) => {
+        if (cantidad === 0) {
+            console.log('No hay productos')
+            return 'unaColumna'
+        } else {
+            console.log('Hay productos')
+            return 'dosColumnas'
+        }
+    } 
+
     return(
         <div className="headerContainer">
         <div className="cantinero">
             <div>
-                <div className="logArea"><NavLink to='/Cart' style={{ textDecoration: 'none' }}><CartWidget /></NavLink><Button label="Acceder"/></div>
+                <div className={`logArea ${columnas(getQuantity())}`}>
+                    <NavLink to='/Cart' style={{ textDecoration: 'none' }}><CartWidget /></NavLink>
+                    <Button label="Acceder"/>
+                </div>
             </div>
             <div className="moesContainer">
             <Link to="/elBardeMoe" >

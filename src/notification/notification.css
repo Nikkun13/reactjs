@@ -1,0 +1,26 @@
+.estiloNotificacion {
+    position: absolute;
+    top: 450px;
+    right: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: auto;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 10px;
+    z-index: 2;
+}
+
+.verde {
+    background-color: green;
+}
+
+.amarillo {
+    background-color: darkorange;
+}
+
+.rojo {
+    background-color: red;
+}
