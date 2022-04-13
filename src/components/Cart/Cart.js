@@ -2,26 +2,36 @@ import { useContext, useState } from "react"
 import CartContext from '../../Context/CartContext'
 import './Cart.css'
 import { NavLink } from 'react-router-dom'
+import {useNotification} from '../../notification/notification'
 
 const Cart = () => {
 
     const { cart, clearCart, getPrice, removeItem, removeItems} = useContext(CartContext)
 
     const [canjeoCodigo, setCanjeoCodigo] = useState(false)
+    const [canjeoCodigoDos, setCanjeoCodigoDos] = useState(false)
     const [codigo, setCodigo] = useState('')
+    const { setNotification } = useNotification()
 
     const canjear = (valor) => {
-        if (canjeoCodigo) {
-            console.log('Ya lo canjeo')
+        if (canjeoCodigo || canjeoCodigoDos) {
+            setNotification('warning', 'Codigo ya canjeado... no te pases de listo mocoso')
         } else {
             if (valor === 'Comision31855') {
                 setCanjeoCodigo(true);
-                console.log('codigo canjeado')
+                setNotification('success', '¡Código canjeado!... la próxima vez paga el total y ayuda al tío Moe')
+            } else if (valor === 'Portavasos') {
+                setCanjeoCodigoDos(true);
+                setNotification('success', '¡Código canjeado!... sumaste un portavasos totalmente gratis a tu pedido')
             } else {
-                console.log('codigo invalido')
-                console.log(valor)
+                setNotification('error', 'Lo lamento, código incorrecto o vencido')
             }
         }
+    }
+
+    const resetCodigo = () => {
+        setCanjeoCodigo(false);
+        setCanjeoCodigoDos(false);
     }
 
     if(cart.length === 0) {
@@ -40,15 +50,18 @@ const Cart = () => {
                 <table className="table table-striped">
                     <thead><tr><th scope="col">Artículos</th><th scope="col">Precio</th><th></th></tr></thead>
                     <tbody>
-                    {cart.map(prod => <tr key={prod.id}><td><b>{prod.name}</b> x {prod.quantity}</td><td>{prod.price*prod.quantity} USD ({prod.price} USD c/u)</td><td><button className="btn btn-secondary btn-block" onClick={() => {removeItem(prod.id)}}> Eliminar un producto</button> <button className="btn btn-secondary btn-block" onClick={() => {removeItems(prod.id)}}> Eliminar todos</button></td></tr>)}
+                    {cart.map(prod => <tr key={prod.id}><td><b>{prod.name}</b> x {prod.quantity}</td><td>{prod.price*prod.quantity} USD ({prod.price} USD c/u)</td><td><button className="btn btn-warning btn-block" onClick={() => {removeItem(prod.id)}}> Eliminar un producto</button> <button className="btn btn-danger btn-block" onClick={() => {removeItems(prod.id)}}> Eliminar todos</button></td></tr>)}
+                    {canjeoCodigoDos && <tr key='portavasos'><td><b>Portavasos</b> x 1</td><td>Gratis</td><td></td></tr>}
                     <tr><td></td><td></td><td></td></tr>
-                    <tr><td><input type="text" name="name" placeholder="Codigo de Descuento" onChange={e => setCodigo(e.target.value)} /></td>{canjeoCodigo ? <td>-{getPrice()/10} USD (-10%)</td> : <td></td>}<td><button className="btn btn-secondary btn-block" onClick={() => canjear(codigo)}>Canjear</button></td></tr>
+                    <tr><td><input type="text" name="name" placeholder="Codigo de Descuento" onChange={e => setCodigo(e.target.value)} /></td>{canjeoCodigo ? <td>-{getPrice()/10} USD (-10%)</td> : <td></td>}{canjeoCodigo || canjeoCodigoDos ? <td><button className="btn btn-info btn-block" onClick={() => canjear(codigo)}>Canjear</button> <button className="btn btn-danger btn-block" onClick={() => resetCodigo()}>Eliminar codigo</button></td> : <td><button className="btn btn-info btn-block" onClick={() => canjear(codigo)}>Canjear</button></td>}</tr>
                     <tr><th>Total a pagar</th>
-                    {canjeoCodigo ? <th>{0.9*getPrice()} USD</th> : <th>{getPrice()} USD</th>}
-                    <th><button className="btn btn-secondary btn-block" onClick={clearCart}>Vaciar carrito</button></th></tr>
+                    {canjeoCodigo ? <th>{getPrice()-getPrice()/10} USD</th> : <th>{getPrice()} USD</th>}
+                    <th><button className="btn btn-danger btn-block" onClick={clearCart}>Vaciar carrito</button></th></tr>
                     </tbody>
-                </table>  
-                <button className="btn btn-secondary btn-block">Pagar</button>
+                </table> 
+                <div className="botonesPagos"> 
+                    <NavLink to='/elBardeMoe' className="btn btn-info btn-block botonCarrito">Seguir comprando</NavLink><button className="btn btn-success btn-block">Pagar</button>
+                </div>
             </div>
         </div>
     )

@@ -10,8 +10,6 @@
 .cantinero {
 	display: flex;
 	width: 100%;
-    /* justify-content: space-between;
-    align-items: center; */
     background-image: url(../imagenes/cantinero.jpg);
 	background-position: top center;
     background-repeat: no-repeat;
@@ -39,8 +37,8 @@
     display: flex;
     align-items: flex-start; 
     z-index: 100;
+    height: 60px;
     display: grid;
-    width: auto;
     padding: 10px;
     margin: 10px;
     background-color: darkgoldenrod;
@@ -49,10 +47,12 @@
 
 .unaColumna {
     grid-template-columns: repeat(1, 1fr);
+    width: auto;
 }
 
 .dosColumnas {
     grid-template-columns: repeat(2, 1fr);
+    width: 160px;
 }
 
 .globoUno {

@@ -1,5 +1,6 @@
 import { useState, createContext, useContext } from 'react'
 import './notification.css'
+import imagenMoe from '../components/imagenes/moeicon.ico'
 
 const Notification = ({ message, severity }) => {
 
@@ -20,7 +21,7 @@ const Notification = ({ message, severity }) => {
 
     return(
         <div className={`estiloNotificacion ${claseNotification(severity)}`}> 
-            {message}
+           <img src={imagenMoe} alt="moe" className="moeIcon" /> -{message}
         </div>
     )
 }
