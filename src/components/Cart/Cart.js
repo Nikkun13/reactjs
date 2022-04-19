@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import CartContext from '../../Context/CartContext'
 import './Cart.css'
 import { NavLink } from 'react-router-dom'
@@ -6,12 +6,21 @@ import {useNotification} from '../../notification/notification'
 
 const Cart = () => {
 
-    const { cart, clearCart, getPrice, removeItem, removeItems} = useContext(CartContext)
+    const { cart, clearCart, getPrice, removeItem, removeItems, getQuantity} = useContext(CartContext)
 
     const [canjeoCodigo, setCanjeoCodigo] = useState(false)
     const [canjeoCodigoDos, setCanjeoCodigoDos] = useState(false)
     const [codigo, setCodigo] = useState('')
     const { setNotification } = useNotification()
+    const [precioFinal, setPrecioFinal] = useState(getPrice())
+
+    useEffect (() => {
+        if (canjeoCodigo === true){
+            setPrecioFinal(getPrice()-getPrice()/10)
+        }  else {
+            setPrecioFinal(getPrice())
+        } 
+    },[canjeoCodigo, getQuantity()])
 
     const canjear = (valor) => {
         if (canjeoCodigo || canjeoCodigoDos) {
@@ -54,8 +63,7 @@ const Cart = () => {
                     {canjeoCodigoDos && <tr key='portavasos'><td><b>Portavasos</b> x 1</td><td>Gratis</td><td></td></tr>}
                     <tr><td></td><td></td><td></td></tr>
                     <tr><td><input type="text" name="name" placeholder="Codigo de Descuento" onChange={e => setCodigo(e.target.value)} /></td>{canjeoCodigo ? <td>-{getPrice()/10} USD (-10%)</td> : <td></td>}{canjeoCodigo || canjeoCodigoDos ? <td><button className="btn btn-info btn-block" onClick={() => canjear(codigo)}>Canjear</button> <button className="btn btn-danger btn-block" onClick={() => resetCodigo()}>Eliminar codigo</button></td> : <td><button className="btn btn-info btn-block" onClick={() => canjear(codigo)}>Canjear</button></td>}</tr>
-                    <tr><th>Total a pagar</th>
-                    {canjeoCodigo ? <th>{getPrice()-getPrice()/10} USD</th> : <th>{getPrice()} USD</th>}
+                    <tr><th>Total a pagar</th><th>{precioFinal} USD</th>
                     <th><button className="btn btn-danger btn-block" onClick={clearCart}>Vaciar carrito</button></th></tr>
                     </tbody>
                 </table> 
