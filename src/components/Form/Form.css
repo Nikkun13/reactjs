@@ -1,0 +1,19 @@
+.formulario {
+    background-color: white;
+    padding: 30px;
+    margin: 30px;
+}
+
+.seccion {
+    margin: 5px
+}
+
+.sepBotones {
+    display:flex;
+    justify-content: space-around;
+    margin-top: 60px;
+}
+
+.sepEspacios {
+    margin-left: 5px;
+}

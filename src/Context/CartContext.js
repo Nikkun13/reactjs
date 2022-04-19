@@ -5,6 +5,7 @@ const Context = createContext()
 
 export const CartContextProvider = ({ children }) => {
     const [cart, setCart] = useState([])
+    const [precioFinal, setPrecioFinal] = useState()
     const { setNotification } = useNotification()
 
     const addItem = (product, quantity) => {
@@ -34,6 +35,22 @@ export const CartContextProvider = ({ children }) => {
 
             
     }
+
+    const addItemPromocional = (product, quantity) => {
+
+        const objItemCart = {
+            ...product,
+            quantity
+        }
+        setCart([...cart, objItemCart ])
+
+    }
+
+    const removeItemPromocional = (id) => {
+                    let newCart = cart.filter((item) => item.id !== id);
+                    setCart([...newCart])
+                    
+}
 
     const clearCart = () => {
         setCart([])
@@ -82,15 +99,23 @@ export const CartContextProvider = ({ children }) => {
         return countP
     }
 
+    const finalPrice = (ultimoPrecio) => {
+        setPrecioFinal(ultimoPrecio)
+    }
+
     return (
         <Context.Provider value={{ 
-            cart, 
+            cart,
+            precioFinal, 
             addItem,
             clearCart,
             getQuantity,
             getPrice,
             removeItem,
-            removeItems
+            removeItems,
+            finalPrice,
+            addItemPromocional,
+            removeItemPromocional
         }}>
             {children}
         </Context.Provider>
