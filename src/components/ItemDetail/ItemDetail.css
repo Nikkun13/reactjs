@@ -1,4 +1,4 @@
-.tarjetaDos {
+.tarjetaDetail {
     width: 99%;
     height: auto;
     align-items: center;
@@ -6,7 +6,7 @@
     margin:5px;
 }
 
-.imagenProducto {
+.imagenProductoDetail {
     height: 100%;
  width: 100%;
  object-fit: contain;

@@ -1,6 +1,6 @@
 import { useState, createContext, useContext } from 'react'
 import './notification.css'
-import imagenMoe from '../components/imagenes/moeicon.ico'
+import imagenMoe from '../images/moeicon.ico'
 
 const Notification = ({ message, severity }) => {
 

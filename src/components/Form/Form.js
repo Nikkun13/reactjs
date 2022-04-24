@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import CartContext from '../../Context/CartContext'
+import CartContext from '../../context/CartContext'
 import { useNotification } from "../../notification/notification";
 import {
   addDoc,
@@ -41,6 +41,9 @@ const Form = () => {
       }
 
     const createOrder = () => {
+
+      if (values.name !== '' && values.phone !== '' && values.email !== '') {
+
         const objOrder = {
           buyer: {
             name: values.name,
@@ -73,7 +76,7 @@ const Form = () => {
           .then(() => {
             if (outOfStock.length === 0) {
               const collectionRef = collection(firestoreDb, "orders");
-              return addDoc(collectionRef, objOrder); //Promesa
+              return addDoc(collectionRef, objOrder);
             } else {
               return Promise.reject({
                 name: "outOfStockError",
@@ -83,7 +86,6 @@ const Form = () => {
           })
           .then(({ id }) => {
             batch.commit();
-            console.log("se genero la orden");
             setNotification(
               "success",
               `La orden se genero correctamente, su codigo de orden es : ${id}`
@@ -103,6 +105,15 @@ const Form = () => {
 
         clearCart();
         setCompraRealizada(true);
+
+      } else {
+
+        setNotification(
+          "error",
+          `Debe completar todos los campos`
+        );
+
+      }
       };
 
     return <>

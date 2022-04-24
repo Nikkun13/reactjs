@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import CartContext from '../../Context/CartContext'
+import CartContext from '../../context/CartContext'
 import './Cart.css'
 import { NavLink } from 'react-router-dom'
 import {useNotification} from '../../notification/notification'
@@ -21,7 +21,10 @@ const Cart = () => {
         }  else {
             finalPrice(getPrice())
         } 
-    },[canjeoCodigo, getPrice()])
+        if (getPrice() === 0) {
+            clearCart()
+        }
+    },[canjeoCodigo, getPrice, finalPrice, clearCart])
 
     const canjear = (valor) => {
         if (canjeoCodigo || canjeoCodigoDos) {

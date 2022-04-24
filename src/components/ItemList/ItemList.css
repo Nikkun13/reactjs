@@ -3,3 +3,9 @@
     grid-template-columns: repeat(3, 1fr);
     justify-content: center !important;
 }
+
+@media (max-width:720px) {
+    .centrado {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

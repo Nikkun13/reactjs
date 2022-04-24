@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useCallback, useState } from "react";
 import {useNotification} from '../notification/notification'
 
 const Context = createContext()
@@ -16,12 +16,12 @@ export const CartContextProvider = ({ children }) => {
                 prod.quantity = prod.quantity + quantity;
                 if (prod.quantity > prod.stock) {
                     prod.quantity = prod.stock;
-                    setNotification('warning', 'No hay suficiente stock del producto seleccionado, se agrego el existente al carrito')
+                    setNotification('warning', 'No hay suficiente stock del producto seleccionado, se agrego el existente al carrito');
                 } else {
-                    setNotification('success', 'La cantidad seleccionada se agregó correctamente al carrito')
-                }
+                    setNotification('success', 'La cantidad seleccionada se agregó correctamente al carrito');
+                };
                 repetido=true;
-                setCart([...cart])
+                setCart([...cart]);
             }
         })
         if (repetido === false) {
@@ -50,11 +50,11 @@ export const CartContextProvider = ({ children }) => {
                     let newCart = cart.filter((item) => item.id !== id);
                     setCart([...newCart])
                     
-}
-
-    const clearCart = () => {
-        setCart([])
     }
+
+    const clearCart = useCallback(() => {
+        setCart([])
+    },[])
 
     const removeItem = (id) => {
         cart.map((prod) => {
@@ -81,27 +81,27 @@ export const CartContextProvider = ({ children }) => {
         )
     }
 
-    const getQuantity = () => {
+    const getQuantity = useCallback(() => {
         let count = 0
         cart.forEach(prod => {
             count = count + prod.quantity
         })
 
         return count
-    }
+    },[cart])
 
-    const getPrice = () => {
+    const getPrice = useCallback(() => {
         let countP = 0
         cart.forEach(prod => {
             countP = countP + prod.quantity*prod.price
         })
 
         return countP
-    }
+    },[cart])
 
-    const finalPrice = (ultimoPrecio) => {
+    const finalPrice = useCallback((ultimoPrecio) => {
         setPrecioFinal(ultimoPrecio)
-    }
+    },[])
 
     return (
         <Context.Provider value={{ 

@@ -1,10 +1,9 @@
 import { useState, useContext, useEffect } from 'react'
 import './NavBar.css'
-import Button from '../Button/Button'
 import CartWidget from "../CartWidget/CarWidget"
 import { Link, NavLink } from 'react-router-dom'
-import Image from '../imagenes/cartelmoes.svg'
-import CartContext from '../../Context/CartContext'
+import Image from '../../images/cartelmoes.svg'
+import CartContext from '../../context/CartContext'
 import { getDocs, collection } from "firebase/firestore"
 import { firestoreDb } from "../../services/firebase"
 
@@ -19,13 +18,11 @@ const NavBar = () => {
 
     useEffect(() => {
         if (getQuantity() === 0) {
-          console.log("No hay productos");
           setColumnas("unaColumna");
         } else {
-          console.log("Hay productos");
           setColumnas("dosColumnas");
         }
-      }, [getQuantity()]);    
+      }, [getQuantity]);    
 
       const ordenCats = (categories) => {
           categories.sort(function (a,b) {
@@ -47,7 +44,6 @@ const NavBar = () => {
             const cats = querySnapshot.docs.map(doc => {
                 return { id:doc.id, ...doc.data()}
             })
-            console.log("Control 2");
             ordenCats(cats);
             setCategorys(cats)
         })
@@ -60,7 +56,7 @@ const NavBar = () => {
             <div>
                 <div className={`logArea ${columnas}`}>
                     <NavLink to='/Cart' style={{ textDecoration: 'none' }}><CartWidget /></NavLink>
-                    <Button label="Acceder"/>
+                    <button className="btn btn-block btn-warning">Registrarse</button>
                 </div>
             </div>
             <div className="moesContainer">
@@ -78,12 +74,6 @@ const NavBar = () => {
             <ul className="menu">
                 <li className='option'><NavLink to='/elBardeMoe' className={({ isActive }) => isActive ? 'botonActivo' : 'boton'}><b>Home</b></NavLink></li>
                 {categorys.map(cates => <li className='option' key={`${cates.id}`}><NavLink to={`/category/${cates.id}`} className={({ isActive }) => isActive ? 'botonActivo' : 'boton'}><b>{cates.label}</b></NavLink></li>)}
-
-                {/* <li className='option'><NavLink to='/category/cervezas' className={({ isActive }) => isActive ? 'botonActivo' : 'boton'}><b>Cervezas</b></NavLink></li>
-                <li className='option'><NavLink to='/category/tragos' className={({ isActive }) => isActive ? 'botonActivo' : 'boton'}><b>Tragos</b></NavLink></li>
-                <li className='option'><NavLink to='/category/importados' className={({ isActive }) => isActive ? 'botonActivo' : 'boton'}><b>Importados</b></NavLink></li>
-                <li className='option'><NavLink to='/category/aperitivos' className={({ isActive }) => isActive ? 'botonActivo' : 'boton'}><b>Aperitivos</b></NavLink></li>
-                <li className='option'><NavLink to='/category/fichas' className={({ isActive }) => isActive ? 'botonActivo' : 'boton'}><b>Fichas</b></NavLink></li> */}
             </ul>
         </nav>
         </div>

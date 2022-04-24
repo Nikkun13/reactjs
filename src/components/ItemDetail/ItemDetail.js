@@ -2,7 +2,7 @@ import ItemCount from '../ItemCount/ItemCount'
 import { useState, useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import './ItemDetail.css'
-import CartContext from '../../Context/CartContext'
+import CartContext from '../../context/CartContext'
 import {useNotification} from '../../notification/notification'
 
 const ItemDetail = (product) => {
@@ -28,8 +28,8 @@ const ItemDetail = (product) => {
     }
 
     return (
-        <div className="card tarjetaDos" key={product.id}>
-            <img className="card-img-top imagenProducto" src={product.img} alt="Card cap"/>
+        <div className="card tarjetaDetail" key={product.id}>
+            <img className="card-img-top imagenProductoDetail" src={product.img} alt="Card cap"/>
             <div className="card-body">
                 <h5 className="card-title">{product.name}</h5>
                 <p className="card-text">{product.description}</p>

@@ -1,6 +1,6 @@
 .tarjeta {
     width: 95%;
-    height: 320px;
+    height: auto;
     align-items: center;
     border: 3px solid darkgoldenrod;
     margin:5px;

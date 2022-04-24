@@ -10,7 +10,7 @@
 .cantinero {
 	display: flex;
 	width: 100%;
-    background-image: url(../imagenes/cantinero.jpg);
+    background-image: url(../../../public/images/cantinero.jpg);
 	background-position: top center;
     background-repeat: no-repeat;
     height:183px;
@@ -52,13 +52,13 @@
 
 .dosColumnas {
     grid-template-columns: repeat(2, 1fr);
-    width: 160px;
+    width: 180px;
 }
 
 .globoUno {
     height: 80px;
     width: 110px;
-    background-image: url(../imagenes/globo1.png);
+    background-image: url(../../../public/images/globo1.png);
     position: absolute;
     top: 5%;
     left: 53%;
@@ -68,15 +68,14 @@
 .globoDos {
     height: 80px;
     width: 110px;
-    background-image: url(../imagenes/globo2.png);
+    background-image: url(../../../public/images/globo2.png);
     position: absolute;
     top: 5%;
-    left: 35%;
+    right: 54%;
     margin: -25px 0 0 0px;
 }
 
 .clickMoe {
-    /* background-color: blue; */
     height: 120px;
     width: 90px;
     position: absolute;
@@ -132,4 +131,61 @@
     text-align: center;
     text-transform: uppercase;
     transition: all .4s ease-in-out;
+}
+
+@media (max-width:1200px) {
+
+    .globoDos {
+        right: 56%;
+    }
+
+    .logArea { 
+        right: 50px; 
+    }
+
+    .option {
+        font-size: 1.2rem;
+    }
+
+    .boton {
+        font-size: 1.2rem;
+    }
+
+    .botonActivo {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width:1000px) {
+
+    .logArea { 
+        right: 0; 
+    }
+
+    .option {
+        font-size: 1rem;
+    }
+
+    .boton {
+        font-size: 1rem;
+    }
+
+    .botonActivo {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width:800px) {
+
+    .option {
+        font-size: 0.7rem;
+    }
+
+    .boton {
+        font-size: 0.7rem;
+    }
+
+    .botonActivo {
+        font-size: 0.7rem;
+    }
 }

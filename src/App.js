@@ -5,7 +5,7 @@ import Form from './components/Form/Form'
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ItemDetailContainer from './components/ItemDetailContainer/ItemDetailContainer';
-import { CartContextProvider } from './Context/CartContext'
+import { CartContextProvider } from './context/CartContext'
 import {NotificationProvider} from './notification/notification'
 
 function App() {
@@ -20,8 +20,8 @@ function App() {
         </header>
         <main className="App-main container"> 
           <Routes>
-            <Route path='/elBardeMoe' element={<ItemListContainer className="lista" greeting="Bienvenidos al Bar de Moe" />} />
-            <Route path='/category/:categoryId' element={<ItemListContainer className="lista" greeting="Bienvenidos al Bar de Moe" />} />
+            <Route path='/elBardeMoe' element={<ItemListContainer className="mensajePagina" greeting="Bienvenidos al Bar de Moe" />} />
+            <Route path='/category/:categoryId' element={<ItemListContainer className="menajePagina" greeting="Bienvenidos al Bar de Moe" />} />
             <Route path='/item/:id' element={<ItemDetailContainer />} />
             <Route path='/cart' element={<Cart />} />
             <Route path='/formulario' element={<Form />} />
