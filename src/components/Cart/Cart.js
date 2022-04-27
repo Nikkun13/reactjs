@@ -3,8 +3,7 @@ import CartContext from '../../context/CartContext'
 import './Cart.css'
 import { NavLink } from 'react-router-dom'
 import {useNotification} from '../../notification/notification'
-import { getDoc, doc } from "firebase/firestore"
-import { firestoreDb } from "../../services/firebase"
+import { getPromo } from "../../services/firebase/firestore"
 
 const Cart = () => {
 
@@ -37,11 +36,8 @@ const Cart = () => {
                 setCanjeoCodigoDos(true);
                 setNotification('success', '¡Código canjeado!... sumaste un portavasos totalmente gratis a tu pedido')
 
-                const docRef = doc(firestoreDb, 'promocion', 'j0hiWiVPxTS0cRRqC9vw')
-            
-                getDoc(docRef).then(querySnapshot => {
-                    const promocional = { id: querySnapshot.id, ...querySnapshot.data()}
-                    addItemPromocional(promocional, 1);
+                getPromo().then(itemPromo => {
+                    addItemPromocional(itemPromo,1)
                 }).catch(err  => {
                     console.log(err)
                 })

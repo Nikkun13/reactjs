@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import ItemList from '../ItemList/ItemList'
 import { useParams } from "react-router-dom"
-import { getDocs, collection, query, where } from "firebase/firestore"
-import { firestoreDb } from "../../services/firebase"
+import { getProducts } from "../../services/firebase/firestore"
+import { useAsync } from '../../hooks/useAsync'
+import { useNotification } from '../../notification/notification'
 
 const ItemListContainer = ({ greeting }) => {
 
@@ -11,27 +12,15 @@ const ItemListContainer = ({ greeting }) => {
 
     const { categoryId } = useParams()
 
-    useEffect(() => {
+    const { setNotification } = useNotification()
 
-        setLoading(true)
-
-        const collectionRef = categoryId ? query(collection(firestoreDb, 'products'),where('category','==', categoryId)) : collection(firestoreDb, 'products')
-
-        getDocs(collectionRef).then(querySnapshot => {
-            const products = querySnapshot.docs.map(doc => {
-                return { id:doc.id, ...doc.data()}
-            })
-            setProducts(products)
-        }).catch(err  => {
-            console.log(err)
-        }).finally(() => {
-            setLoading(false)
-        })
-
-        return (() => {
-            setProducts([])
-        })          
-    }, [categoryId])
+    useAsync(
+        setLoading, 
+        () => getProducts(categoryId), 
+        setProducts, 
+        () => setNotification('error', 'Hubo un error al cargar los productos'), 
+        [categoryId]
+    )
 
     if(loading) {
         return <h1 style={{color:'white'}}>Cargando productos...</h1>

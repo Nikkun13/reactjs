@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import ItemDetail from "../ItemDetail/ItemDetail"
 import { useParams } from 'react-router-dom'
-import { firestoreDb } from "../../services/firebase"
-import {getDoc, doc } from "firebase/firestore"
+import { getProductById } from "../../services/firebase/firestore"
+import { useAsync } from '../../hooks/useAsync'
+import { useNotification } from '../../notification/notification'
 
 const ItemDetailContainer = () => {
 
@@ -11,21 +12,15 @@ const ItemDetailContainer = () => {
 
     const { id } = useParams()
 
-    useEffect(() => {
-        setLoading(true)
+    const { setNotification } = useNotification()
 
-        const docRef = doc(firestoreDb, 'products', id)
-
-        getDoc(docRef).then(querySnapshot => {
-            const item = { id: querySnapshot.id, ...querySnapshot.data()}
-            setItem(item)
-        }).catch(err  => {
-            console.log(err)
-        }).finally(() => {
-            setLoading(false)
-        })
-
-    },[id])
+    useAsync(
+        setLoading, 
+        () => getProductById(id), 
+        setItem, 
+        () => setNotification('error', 'Hubo un error al cargar el producto'), 
+        [id]
+    )
 
     if(loading) {
         return <h1 style={{color:'white'}}>Cargando producto...</h1>

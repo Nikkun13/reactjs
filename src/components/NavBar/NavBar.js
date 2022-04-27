@@ -4,8 +4,8 @@ import CartWidget from "../CartWidget/CarWidget"
 import { Link, NavLink } from 'react-router-dom'
 import Image from '../../images/cartelmoes.svg'
 import CartContext from '../../context/CartContext'
-import { getDocs, collection } from "firebase/firestore"
-import { firestoreDb } from "../../services/firebase"
+import { getCats } from "../../services/firebase/firestore"
+import { ordenCats } from './helpers'
 
 const NavBar = () => {
 
@@ -22,31 +22,16 @@ const NavBar = () => {
         } else {
           setColumnas("dosColumnas");
         }
-      }, [getQuantity]);    
-
-      const ordenCats = (categories) => {
-          categories.sort(function (a,b) {
-              if (a.orden > b.orden) {
-                  return 1;
-              } 
-              if (a.orden < b.orden) {
-                  return -1;
-              }
-              return 0
-          })
-      }
-
+    }, [getQuantity]);    
 
     useEffect(() => {
-        const collectionRefCat =  collection(firestoreDb, 'category')
-
-        getDocs(collectionRefCat).then(querySnapshot => {
-            const cats = querySnapshot.docs.map(doc => {
-                return { id:doc.id, ...doc.data()}
-            })
-            ordenCats(cats);
-            setCategorys(cats)
+        getCats().then(categorys => {
+            ordenCats(categorys);
+            setCategorys(categorys)
+        }).catch(err  => {
+            console.log(err)
         })
+        
     },[])
         
 
